@@ -33,6 +33,8 @@ def signup(request):
 
                 if type == 'Student':
                     return redirect('student_signup')
+                elif type == 'Teacher':
+                    return redirect('teacher_signup')
     else:
         return render(request, 'accounts/signup.html', {'nbar': 'signup'})
 
@@ -93,3 +95,17 @@ def student_signup(request):
         return redirect('home')
     else:
         return render(request,'accounts/student_form.html',{'nbar':'student_signup'})
+
+def teacher_signup(request):
+    if request.method == 'POST':
+        firstname = request.POST.get('firstName')
+        lastname = request.POST.get('lastName')
+        designation = request.POST.get('designation')
+        code = request.POST.get('code')
+        contact = request.POST.get('contact')
+
+
+        return redirect('home')
+    else:
+        return render(request,'accounts/teacher_form.html',{'nbar':'student_signup'})
+
