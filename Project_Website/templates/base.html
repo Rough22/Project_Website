@@ -1,37 +1,64 @@
 <!DOCTYPE html>
 <head>
     {% load staticfiles %}
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+          integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX"
+          crossorigin="anonymous">
     <script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
-    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+            integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+            crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <style>
         body {
-            background-image: url({%static 'bg.jpg' %});
-            background-color: #cccccc;
-}
+            background-image: url({%static 'bg2.jpg' %});
+        }
+.floatLeft { width: 30%; float: left; padding-right: 10px}
+.floatRight {width: 70%; float: right; padding-left: 10px }
+
     </style>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container" >
-            <a class="navbar-brand" href="{% url 'home' %}" style="font-family: 'Pacifico', cursive;" >
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}"
+               style="font-family: 'Pacifico', cursive;">
                 <img src={% static 'idea.png' %} width="25" height="25"
-                     class="d-inline-block align-top" >CourseDB</a>
+                     class="d-inline-block align-top">CourseDB</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                {% if user.is_authenticated %}
-                <ul class="nav navbar-nav mr-auto" >
-                    <li class="nav-item disabled">
-                        <a class="nav-link" href="{% url 'profile' %}" style="font-family: 'Signika', sans-serif;">Profile</a>
-                    </li>
-                </ul>
+                {% if user.is_authenticated and user.is_student %}
+                    <ul class="nav navbar-nav mr-auto">
+                        <li class="nav-item disabled">
+                            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                        </li>
+                        <li class="nav-item disabled">
+                            <a class="nav-link" href="#">Previous Courses</a>
+                        </li>
+                        <li class="nav-item disabled">
+                            <a class="nav-link" href="#">Tasks</a>
+                        </li>
+                    </ul>
+                {% elif user.is_authenticated and user.is_teacher %}
+                    <ul class="nav navbar-nav mr-auto">
+                        <li class="nav-item disabled">
+                            <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                        </li>
+                        <li class="nav-item disabled">
+                            <a class="nav-link" href="#">Previous Courses</a>
+                        </li>
+                        <li class="nav-item disabled">
+                            <a class="nav-link" href="#">Previous Courses</a>
+                        </li>
+                    </ul>
                 {% endif %}
                 <ul class="nav navbar-nav ml-auto ">
                     {% if user.is_authenticated %}
@@ -44,20 +71,35 @@
                             </form>
                         </li>
                     {% endif %}
+
                 </ul>
             </div>
         </div>
     </nav>
 </header>
+<div class="container" style="font-family: 'Open Sans'">
+    {% block content %}
+    {% endblock %}
+</div>
+<div style="Height:100px"></div>
 
-{% block content %}
-{% endblock %}
-    <div style="Height:100px"></div>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+        integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+        crossorigin="anonymous"></script>
 <script src="https://cdn.rawgit.com/FezVrasta/snackbarjs/1.1.0/dist/snackbar.min.js"></script>
-<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+        integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+        crossorigin="anonymous"></script>
 <script>
-  $('body').bootstrapMaterialDesign();
+
+    jQuery(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.location = $(this).data("href");
+        });
+    });
+    $('body').bootstrapMaterialDesign();
 </script>
 </body>

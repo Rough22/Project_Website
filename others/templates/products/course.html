@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<title>Home</title>
+{% extends 'base.html' %}
+{% block content %}
+    <body>
+
+    {% if user.is_authenticated and user.is_teacher %}
+        <div class="jumbotron" style="height: 10px">
+            <h1 class="display-4" style="font-family: 'Catamaran', sans-serif;" align="center">
+                Tasks for this Course</h1>
+        </div>
+        <br>
+        <div class="container" align="center" style="padding-left: 350px">
+            <a href={% url 'home' %} class="btn btn-raised btn-info"
+            style="align-self:center-right">Create Task</a>
+        </div>
+        <br>
+        <div class="container">
+        <div class="floatRight">
+            <table class="table table-hover table-light">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Task ID</th>
+                    <th scope="col">Task Description</th>
+                    <th scope="col">Deadline</th>
+                    <th scope="col">Task References</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ task.task_id }}</td>
+                        <td>{{ task.task_description }}</td>
+                        <td>{{ task.deadline }}</td>
+                        <td>{{ task.referrence }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+                <div class="floatLeft">
+            <table class="table table-hover table-light">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Team Name</th>
+                    <th scope="col">Completed Task</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for count,team in data %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ team.team_name }}</td>
+                        <td>{{ count }}/{{ total_task_count }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    {% elif user.is_authenticated and user.is_student %}
+        <div class="jumbotron" style="height: 10px">
+            <h1 class="display-4" style="font-family: 'Catamaran', sans-serif;" align="center">
+                Enrolled Courses</h1>
+        </div>
+        <br>
+        <div class="container" align="center">
+            <a href={% url 'create_course' %} class="btn btn-raised btn-info"
+            style="align-self:center">Enroll in a course</a>
+        </div>
+        <br>
+        <div class="container">
+            <table class="table table-hover table-light">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Course Code</th>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Course Credit</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for course in Courses %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ course.course_id }}</td>
+                        <td>{{ course.course_name }}</td>
+                        <td>{{ course.credit }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+        <br>
+        <div class="container">
+            <div style="text-align: center">
+                <img src="http://www.forsythunitedway.org/wp-content/uploads/2015/08/education-icon.png"
+                     class="img-fluid" width="150" height="150">
+            </div>
+        </div>
+        <br>
+        <div class="jumbotron jumbotron-fluid">
+            <h1 class="display-4" align="center">Welcome to CourseDB</h1>
+            <div class="container">
+                <div align="center">
+                    <h5 align="center">Register as</h5>
+                    <a href="{% url 'student_signup' %}"
+                       class="btn btn-raised btn-success">Student</a>
+                    <a href="{% url 'teacher_signup' %}"
+                       class="btn btn-raised btn-success">Teacher</a>
+                </div>
+                <hr>
+                <h5 align="center">Already a User?</h5>
+                <div align="center">
+                    <a href="{% url 'login' %}" class="btn btn-raised btn-primary">Login</a>
+                </div>
+            </div>
+        </div>
+        <br>
+    {% endif %}
+    </body>
+{% endblock %}
+

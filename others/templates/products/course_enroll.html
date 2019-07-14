@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<title>Home</title>
+{% extends 'base.html' %}
+{% block content %}
+    <body>
+    {% if user.is_authenticated and user.is_student %}
+        <br>
+        <div class="card container" style="width: 700px">
+            <hr>
+            <h3 align="center">Enroll for a course</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="container" style="width: 650px;">
+                    <div class="form-group">
+                        <label for="TeamName" class="bmd-label-floating">Team Name</label>
+                        <input type="text" class="form-control" name="TeamName"
+                               aria-describedby="userHelp">
+                    </div>
+                    <div class="form-group">
+                        <label for="TeamMember1" class="bmd-label-floating">Member One Registration Number</label>
+                        <input type="text" class="form-control" name="TeamMember1"
+                               aria-describedby="userHelp">
+                    </div>                    <div class="form-group">
+                        <label for="TeamMember2" class="bmd-label-floating">Member Two Registration Number</label>
+                        <input type="text" class="form-control" name="TeamMember2"
+                               aria-describedby="userHelp">
+                    </div>                    <div class="form-group">
+                        <label for="TeamMember3" class="bmd-label-floating">Member Three Registration Number</label>
+                        <input type="text" class="form-control" name="TeamMember3"
+                               aria-describedby="userHelp">
+                    </div>
+                    <div class="form-group">
+                        <label for="courseSelect">Select Available Courses</label>
+                        <select class="form-control" id="courseSelect" name="courseSelect">
+                            {% for avail in courses %}
+                                <option value="{{ avail.course_id }}">{{ avail.course_id }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                <br>
+                <div class="container" align="center">
+                 <button type="submit" class="btn btn-raised btn-primary">Sign up</button>
+
+                </div>
+            </form>
+        </div>
+    {% endif %}
+    </body>
+{% endblock %}
